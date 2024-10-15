@@ -21,13 +21,20 @@ require_once 'bootstrap.php';
 //---[Bank account 1]---/
 // create a new account1 with balance 400
 pl('--------- [Start testing bank account #1, No overdraft] --------');
+
+
 try {
+    $bankAccount1 = new BankAccount(0, true, false);
     // show balance account
+    $bankAccount1->setBalance(400);
+    pl('My balance '. $bankAccount1->getBalance());
 
     // close account
-
+    $bankAccount1->closeAccount();
+    pl('My account is now closed');
     // reopen account
-
+    $bankAccount1->reopenAccount();
+    pl('My account is now reopened');
 
     // deposit +150 
     pl('Doing transaction deposit (+150) with current balance ' . $bankAccount1->getBalance());
@@ -57,9 +64,11 @@ pl('My balance after failed last transaction : ' . $bankAccount1->getBalance());
 //---[Bank account 2]---/
 pl('--------- [Start testing bank account #2, Silver overdraft (100.0 funds)] --------');
 try {
-    
+    $bankAccount2 = new BankAccount(0, true, false);
+    $bankAccount2->setBalance(200);
     // show balance account
-   
+    pl('My balance : '.    $bankAccount2->getBalance());
+
     // deposit +100
     pl('Doing transaction deposit (+100) with current balance ' . $bankAccount2->getBalance());
     
