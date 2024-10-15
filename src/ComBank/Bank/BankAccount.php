@@ -20,4 +20,61 @@ use ComBank\Transactions\Contracts\BankTransactionInterface;
 
 class BankAccount
 {
+    private $balance;
+    private $status;
+    private $overdraft;
+
+    public function transaction($BankTransactionInterface){
+    
+    
     }
+    
+    //--------------------------------------------------------
+
+    public function openAccount() : bool{
+
+        return true;
+    }
+
+    //--------------------------------------------------------
+
+    public function reopenAccount() : void{
+
+    }
+
+    //--------------------------------------------------------
+
+    public function closeAccount() : void{
+
+    }
+
+    //--------------------------------------------------------
+
+    public function getBalance() :float{
+
+        return 0;
+    }
+
+    //--------------------------------------------------------
+
+    // public function getOverdraft() :OverdraftInterface{
+
+        
+    // }
+
+    //--------------------------------------------------------
+
+    public function applyOverdraft($OverdraftInterface): void{
+
+    }
+
+    //--------------------------------------------------------
+
+    public function setBalance($float) : void{
+
+    }
+
+
+}
+
+
