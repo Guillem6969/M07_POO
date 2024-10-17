@@ -46,13 +46,15 @@ class BankAccount implements BackAccountInterface
     //--------------------------------------------------------
 
     public function reopenAccount() : void{
-        $this->status = true;
+        $this->status = BackAccountInterface::STATUS_OPEN;
+        pl('My account is now reopened');
     }
 
     //--------------------------------------------------------
 
     public function closeAccount() : void{
-        $this->status = false;
+        $this->status = BackAccountInterface::STATUS_CLOSED;
+        pl('My account is now closed');
     }
 
     //--------------------------------------------------------
