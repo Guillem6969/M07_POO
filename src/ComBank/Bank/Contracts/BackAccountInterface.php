@@ -12,7 +12,7 @@ use ComBank\Exceptions\FailedTransactionException;
 use ComBank\OverdraftStrategy\Contracts\OverdraftInterface;
 use ComBank\Transactions\Contracts\BankTransactionInterface;
 
-interface BackAccountInterface
+interface BackAccountInterface 
 {
     const STATUS_OPEN = 'OPEN';
     const STATUS_CLOSED = 'CLOSED';
