@@ -19,9 +19,17 @@ class WithdrawTransaction extends BaseTransaction implements BankTransactionInte
     }
 
     public function applyTransaction(BackAccountInterface $bankAccount): float{
-        $balance = $bankAccount->getBalance();
-        $amount = $this->getAmount();
-        return $balance - $amount;
+        if(!$bankAccount->getBalance() < 0)
+        {
+            $balance = $bankAccount->getBalance();
+            $amount = $this->getAmount();
+            return $balance - $amount;
+        }
+        else
+        {
+            echo("Error transaction: Insuficient balance to complete the withdrawal");
+        }
+        return $bankAccount->getBalance();
     }
 
     public function getTransactionInfo(): string{
