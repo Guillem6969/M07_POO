@@ -17,21 +17,34 @@ use ComBank\Exceptions\InvalidOverdraftFundsException;
 use ComBank\OverdraftStrategy\Contracts\OverdraftInterface;
 use ComBank\Support\Traits\AmountValidationTrait;
 use ComBank\Transactions\Contracts\BankTransactionInterface;
+use PhpParser\Node\Stmt\Return_;
 
 class BankAccount implements BackAccountInterface
 {
     private $balance;
     private $status;
-    // private $overdraft;
+    
+    private $overdraft;
 
 
-    function __construct($balance){
+    function __construct($balance, OverdraftInterface $overdraft = null){
         $this->balance = $balance;
         $this->status = BackAccountInterface::STATUS_OPEN;
+
+        if( $overdraft === null ){
+            $this->overdraft = new NoOverdraft();
+        } else {
+            $this->overdraft = $overdraft;
+        }
+
     }
 
     public function transaction(BankTransactionInterface $bankTransaction): void {
-        $this->setBalance($bankTransaction->applyTransaction($this));
+        try{
+            $this->setBalance($bankTransaction->applyTransaction($this));
+        }catch(InvalidOverdraftFundsException $e){
+            throw new FailedTransactionException($e->getMessage(), $e->getCode(), $e);
+        }
     }
     
     //--------------------------------------------------------
@@ -63,14 +76,13 @@ class BankAccount implements BackAccountInterface
     //--------------------------------------------------------
 
     public function getOverdraft() :OverdraftInterface{
- 
-        
+        return $this->overdraft; 
     }
 
     //--------------------------------------------------------
 
-    public function applyOverdraft($OverdraftInterface): void{
-
+    public function applyOverdraft(OverdraftInterface $overdraft): void{
+        $this->overdraft = $overdraft;
     }
 
     //--------------------------------------------------------

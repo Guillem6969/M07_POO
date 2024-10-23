@@ -24,7 +24,7 @@ pl('--------- [Start testing bank account #1, No overdraft] --------');
 
 
 try {
-    $bankAccount1 = new BankAccount(0, true, false);
+    $bankAccount1 = new BankAccount(0);
     // show balance account
     $bankAccount1->setBalance(400);
     pl('My balance '. $bankAccount1->getBalance());
@@ -49,7 +49,7 @@ try {
     // withdrawal -600
     $bankAccount1->transaction(new WithdrawTransaction(600));
     pl('Doing transaction withdrawal (-600) with current balance ' . $bankAccount1->getBalance());
-
+    
 } catch (ZeroAmountException $e) {
     pl($e->getMessage());
 } catch (BankAccountException $e) {
@@ -65,19 +65,19 @@ pl('My balance after failed last transaction : ' . $bankAccount1->getBalance());
 //---[Bank account 2]---/
 pl('--------- [Start testing bank account #2, Silver overdraft (100.0 funds)] --------');
 try {
-    $bankAccount2 = new BankAccount(0, true, false);
+    $bankAccount2 = new BankAccount(0, new SilverOverdraft());
     $bankAccount2->setBalance(200);
     // show balance account
     pl('My balance : '.    $bankAccount2->getBalance());
 
     // deposit +100
     pl('Doing transaction deposit (+100) with current balance ' . $bankAccount2->getBalance());
-    
+    $bankAccount2->transaction(new DepositTransaction(100));
     pl('My new balance after deposit (+100) : ' . $bankAccount2->getBalance());
 
     // withdrawal -300
     pl('Doing transaction deposit (-300) with current balance ' . $bankAccount2->getBalance());
-   
+    $bankAccount2->transaction(new WithdrawTransaction(300));
     pl('My new balance after withdrawal (-300) : ' . $bankAccount2->getBalance());
 
     // withdrawal -50

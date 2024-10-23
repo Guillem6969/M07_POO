@@ -41,7 +41,7 @@ interface BackAccountInterface
 
     //--------------------------------------------------------
 
-    public function applyOverdraft($OverdraftInterface): void;
+    public function applyOverdraft(OverdraftInterface $overdraft): void;
 
     //--------------------------------------------------------
 
