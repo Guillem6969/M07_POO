@@ -16,6 +16,7 @@ class WithdrawTransaction extends BaseTransaction implements BankTransactionInte
 {
 
     public function __construct($amount){
+        parent::validateAmount($amount);
         $this->amount = $amount;
     }
 
@@ -27,7 +28,7 @@ class WithdrawTransaction extends BaseTransaction implements BankTransactionInte
 
         $overdraft = $bankAccount->getOverdraft()->isGrantOverdraftFounds($next_balance);
 
-        if($next_balance > 0){
+        if($next_balance < 0){
             if($overdraft){
                 return $next_balance;
             }
@@ -35,11 +36,12 @@ class WithdrawTransaction extends BaseTransaction implements BankTransactionInte
                 throw new InvalidOverdraftFundsException("Insuficient balance to complete the withdrawal");
             }
         }
-        return $bankAccount->getBalance();
+
+        return $next_balance;
     }
 
     public function getTransactionInfo(): string{
-        return "f";
+        return "WITHDRAW_TRANSACTION";
     }
 
     public function getAmount(){

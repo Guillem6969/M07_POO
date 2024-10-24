@@ -40,31 +40,54 @@ class BankAccount implements BackAccountInterface
     }
 
     public function transaction(BankTransactionInterface $bankTransaction): void {
-        try{
-            $this->setBalance($bankTransaction->applyTransaction($this));
-        }catch(InvalidOverdraftFundsException $e){
-            throw new FailedTransactionException($e->getMessage(), $e->getCode(), $e);
+        if($this->status === BackAccountInterface::STATUS_OPEN){
+            try{
+                $this->setBalance($bankTransaction->applyTransaction($this));
+            }catch(InvalidOverdraftFundsException $e){
+                throw new FailedTransactionException($e->getMessage(), $e->getCode(), $e);
+            }
+        }else{
+            throw new BankAccountException("ERROR");
         }
+        
     }
     
     //--------------------------------------------------------
 
     public function openAccount() : bool{
-        return true;
+        if($this->status === BackAccountInterface::STATUS_OPEN){
+            return true;
+        }
+        else{
+            return false;
+        }    
+        
     }
 
     //--------------------------------------------------------
 
     public function reopenAccount() : void{
-        $this->status = BackAccountInterface::STATUS_OPEN;
-        pl('My account is now reopened');
+        if($this->status === BackAccountInterface::STATUS_OPEN){
+            throw new BankAccountException("Error: Account is already open");
+        }
+        else{
+            $this->status = BackAccountInterface::STATUS_OPEN;
+            echo("<br> My account is now opened");
+        }
+       
     }
 
     //--------------------------------------------------------
 
     public function closeAccount() : void{
-        $this->status = BackAccountInterface::STATUS_CLOSED;
-        pl('My account is now closed');
+        if($this->status === BackAccountInterface::STATUS_CLOSED){
+            throw new BankAccountException("Error: Account is already closed");
+
+        }else{
+            $this->status = BackAccountInterface::STATUS_CLOSED;
+            echo("<br> My account is now closed <br>");
+        }
+        
     }
 
     //--------------------------------------------------------

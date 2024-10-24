@@ -14,6 +14,7 @@ class DepositTransaction extends BaseTransaction implements BankTransactionInter
 {
 
     public function __construct($amount){
+        parent::validateAmount($amount);
         $this->amount = $amount;
     }
 
@@ -24,7 +25,7 @@ class DepositTransaction extends BaseTransaction implements BankTransactionInter
     }
 
     public function getTransactionInfo(): string{
-        return "f";
+        return "DEPOSIT_TRANSACTION";
     }
 
     public function getAmount(){
