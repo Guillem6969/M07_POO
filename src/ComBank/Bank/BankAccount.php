@@ -72,7 +72,7 @@ class BankAccount implements BackAccountInterface
         }
         else{
             $this->status = BackAccountInterface::STATUS_OPEN;
-            echo("<br> My account is now opened");
+            echo("<br> My account is now opened <br>");
         }
        
     }

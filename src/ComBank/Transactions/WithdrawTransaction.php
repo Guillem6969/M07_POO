@@ -26,7 +26,7 @@ class WithdrawTransaction extends BaseTransaction implements BankTransactionInte
         $amount = $this->getAmount();
         $next_balance = $balance - $amount;
 
-        $overdraft = $bankAccount->getOverdraft()->isGrantOverdraftFounds($next_balance);
+        $overdraft = $bankAccount->getOverdraft()->isGrantOverdraftFunds($next_balance);
 
         if($next_balance < 0){
             if($overdraft){
