@@ -16,25 +16,36 @@ use ComBank\Exceptions\FailedTransactionException;
 use ComBank\Exceptions\InvalidOverdraftFundsException;
 use ComBank\OverdraftStrategy\Contracts\OverdraftInterface;
 use ComBank\Support\Traits\AmountValidationTrait;
+use ComBank\Support\Traits\ApiTrait;
 use ComBank\Transactions\Contracts\BankTransactionInterface;
 use PhpParser\Node\Stmt\Return_;
 
 class BankAccount implements BackAccountInterface
 {
-    private $balance;
-    private $status;
+    use ApiTrait;
+    protected $balance;
+    protected $status;
     
-    private $overdraft;
+    protected $overdraft;
+
+    protected $currency;
 
 
-    function __construct($balance, OverdraftInterface $overdraft = null){
+    function __construct($balance, OverdraftInterface $overdraft = null, string $currency = "EUR" ){
         $this->balance = $balance;
         $this->status = BackAccountInterface::STATUS_OPEN;
+
 
         if( $overdraft === null ){
             $this->overdraft = new NoOverdraft();
         } else {
             $this->overdraft = $overdraft;
+        }
+
+        if( $currency === "USD" ){
+            $this->currency = "USD";
+        } else {
+            $this->currency = "EUR";
         }
 
     }

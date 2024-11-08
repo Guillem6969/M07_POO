@@ -8,6 +8,8 @@
  */
 
 use ComBank\Bank\BankAccount;
+use ComBank\Bank\InternationalBankAccount;
+use ComBank\Bank\NationalBankAccount;
 use ComBank\OverdraftStrategy\SilverOverdraft;
 use ComBank\Transactions\DepositTransaction;
 use ComBank\Transactions\WithdrawTransaction;
@@ -18,8 +20,8 @@ use ComBank\Exceptions\ZeroAmountException;
 require_once 'bootstrap.php';
 
 
-//---[Bank account 1]---/
-// create a new account1 with balance 400
+    //---[Bank account 1]---/
+    // create a new account1 with balance 400
 pl('--------- [Start testing bank account #1, No overdraft] --------');
 
 
@@ -111,4 +113,27 @@ try {
 } catch (BankAccountException $e) {
     pl($e->getMessage());
 }
+
+    //---[Bank account 3]---/
+    // create a new NationalAccount with balance 500
+
+    pl('--------- [Start testing bank national account (no conversion)] --------');
+
+    $nationalAccount = new NationalBankAccount(500);
+    pl('My balance '. $nationalAccount->getBalance());
+
+    //---[Bank account 3]---/
+    // create a new International Account with balance 300
+
+    pl('--------- [Start testing bank International account (Dollar conversion)] --------');
+    $internationalAccount = new InternationalBankAccount(300);
+
+    pl('My balance '. $internationalAccount->getBalance());
+
+    $currentBalance = $internationalAccount->getBalance();
+    pl('Converting balance to Dollars '. $internationalAccount->convertBalance($currentBalance));
+
+
+
+
 
