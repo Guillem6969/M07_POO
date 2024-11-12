@@ -8,20 +8,25 @@ trait ApiTrait
         
     }
 
+
     function convertBalance(float $euros): float {
+        $from = "EUR";
+        $to = "USD";
+
+        $url = "https://api.fxfeed.io/v1/convert?api_key=fxf_ghmIud6wxzpKA6cuLZTM&from=$from&to=$to&amount=$euros";
+
         $ch = curl_init();
-        $api = "https://manyapis.com/products/currency/eur-to-usd-rate?amount=" . $euros;
-        curl_setopt($ch, CURLOPT_URL, $api);
-        curl_setopt_array($ch, array(
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER => 'sk_47537c68824e436695b624303457317a',
-            CURLOPT_SSL_VERIFYPEER => false,
-        ));
-        $result = curl_exec($ch);
-        curl_close($ch);
-        $convertJson = json_decode($result);
-         return $convertJson->convertedAmount;
-        }
+
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+
+        $response = curl_exec($ch);
+
+        $data = json_decode($response,true);
+
+        return $data ["result"];
+    }
+
 
     public function detectFraud(){
 

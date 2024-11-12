@@ -126,6 +126,11 @@ class BankAccount implements BackAccountInterface
 
     }
 
+    //--------------------------------------------------------
+
+    public function getCurrency(){
+        return $this->currency;
+    }
 
 }
 

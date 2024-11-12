@@ -120,7 +120,7 @@ try {
     pl('--------- [Start testing bank national account (no conversion)] --------');
 
     $nationalAccount = new NationalBankAccount(500 , null, "EUR");
-    pl('My balance '. $nationalAccount->getBalance());
+    pl('My balance '. $nationalAccount->getBalance() .' € ('. $nationalAccount->getCurrency() .')');
 
     //---[Bank account 3]---/
     // create a new International Account with balance 300
@@ -128,7 +128,7 @@ try {
     pl('--------- [Start testing bank International account (Dollar conversion)] --------');
     $internationalAccount = new InternationalBankAccount(300, null, "EUR");
 
-    pl('My balance '. $internationalAccount->getBalance());
+    pl('My balance '. $internationalAccount->getBalance() . ' € ('. $internationalAccount->getCurrency() .')');
 
     $currentBalance = $internationalAccount->getBalance();
     pl('Converting balance to Dollars '. $internationalAccount->convertBalance($currentBalance));
