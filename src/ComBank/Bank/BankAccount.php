@@ -19,10 +19,13 @@ use ComBank\Support\Traits\AmountValidationTrait;
 use ComBank\Support\Traits\ApiTrait;
 use ComBank\Transactions\Contracts\BankTransactionInterface;
 use PhpParser\Node\Stmt\Return_;
+use ComBank\Person\Person;
 
 class BankAccount implements BackAccountInterface
 {
     use ApiTrait;
+
+    protected Person $holder;
     protected $balance;
     protected $status;
     
@@ -31,7 +34,8 @@ class BankAccount implements BackAccountInterface
     protected $currency;
 
 
-    function __construct($balance, OverdraftInterface $overdraft = null, string $currency = "EUR" ){
+
+    function __construct($balance, OverdraftInterface $overdraft = null, string $currency = "EUR", Person $holder = null){
         $this->balance = $balance;
         $this->status = BackAccountInterface::STATUS_OPEN;
 
@@ -47,6 +51,8 @@ class BankAccount implements BackAccountInterface
         } else {
             $this->currency = "EUR";
         }
+
+        $this->holder = $holder;
 
     }
 
