@@ -11,6 +11,7 @@ use ComBank\Bank\BankAccount;
 use ComBank\Bank\InternationalBankAccount;
 use ComBank\Bank\NationalBankAccount;
 use ComBank\OverdraftStrategy\SilverOverdraft;
+use ComBank\Person\Person;
 use ComBank\Transactions\DepositTransaction;
 use ComBank\Transactions\WithdrawTransaction;
 use ComBank\Exceptions\BankAccountException;
@@ -132,6 +133,16 @@ try {
 
     $currentBalance = $internationalAccount->getBalance();
     pl('Converting balance to Dollars '. $internationalAccount->convertBalance($currentBalance));
+
+    pl('--------- [Start testing National account] --------');
+    $person1 = new Person("john.doe@example.com", "54559040G", "Guillem");
+
+    pl('--------- [Start testing International account] --------');
+    $person1 = new Person("john.doe@invalid-email", "54559040G", "Guillem");
+
+
+
+
 
 
 

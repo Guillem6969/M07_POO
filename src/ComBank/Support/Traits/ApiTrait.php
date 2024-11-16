@@ -7,8 +7,7 @@ trait ApiTrait
     public function validateEmail(string $email){
 
         $url = "https://api.usercheck.com/email/$email";
-        //  api key"no0Z7dgqz60LvPoUy8CqXOKVZx98CbJC";
-
+    
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -18,10 +17,10 @@ trait ApiTrait
 
         curl_close($ch);
 
-        if ($data ["status"] == "200"){
-            return "is valid";
+        if ($data ["status"] == 200){
+            return true;
         }else{
-            return "Error: Invalid email adress: $email";
+            return false;
         }
 
     }

@@ -25,7 +25,7 @@ class BankAccount implements BackAccountInterface
 {
     use ApiTrait;
 
-    protected Person $holder;
+    protected ?Person $holder;
     protected $balance;
     protected $status;
     

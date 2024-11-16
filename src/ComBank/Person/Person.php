@@ -1,6 +1,10 @@
 <?php namespace ComBank\Person;
 
+      use ComBank\Support\Traits\ApiTrait;
+
 class Person {
+
+    use ApiTrait;
     private $email;
 
     private $idCard;
@@ -9,9 +13,17 @@ class Person {
 
     
     function __construct($email, $idCard, $name) {
-        $this->email = $email;
         $this->idCard = $idCard;
         $this->name = $name;
+
+        if ($this->validateEmail($email)){
+            $this->email = $email;
+            pl("validating email: ".$email);
+            pl("Email is valid");
+        } else{
+            pl("validating email: ".$email);
+            pl("Error: invalid email address: ". $email);
+        }
     }
 
     public function getEmail()
