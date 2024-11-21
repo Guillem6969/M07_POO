@@ -11,18 +11,36 @@ class Person {
 
     private $name;
 
+    private $phone;
     
-    function __construct($email, $idCard, $name) {
+    function __construct(string $email = null, $idCard, $name, string $phone = null) {
         $this->idCard = $idCard;
         $this->name = $name;
 
-        if ($this->validateEmail($email)){
-            $this->email = $email;
-            pl("validating email: ".$email);
-            pl("Email is valid");
+        if( $email === null ){
+            $this->email = "john.doe@example.com";
         } else{
-            pl("validating email: ".$email);
-            pl("Error: invalid email address: ". $email);
+            if ($this->validateEmail($email)){
+                $this->email = $email;
+                pl("validating email: ".$email);
+                pl("Email is valid");
+            } else{
+                pl("validating email: ".$email);
+                pl("Error: invalid email address: ". $email);
+            }
+        }
+    
+        if( $phone === null ){
+            $this->phone = "+34607600775";
+        } else {
+            if ($this->validatePhone($phone)){
+                $this->phone = $phone;
+                pl("Validating phone: ".$phone);
+                pl("Phone is valid");
+            } else{
+                pl("Validating email: ".$phone);
+                pl("Phone: invalid phone number: ". $phone);
+            }
         }
     }
 

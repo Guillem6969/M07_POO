@@ -64,7 +64,7 @@ trait ApiTrait
 
         foreach($data as $key => $value ){
             if ($data[$key]['movementType']==$transaction->getTransactionInfo()){
-                if($data[$key]['amount_max']<$transaction->getAmount() && $data[$key]['amount']>$transaction->getAmount()){
+                if($data[$key]['amount_max']>$transaction->getAmount() && $data[$key]['amount']<$transaction->getAmount()){
                     if ($data[$key]['action']==BankTransactionInterface::TRANSACTION_BLOCKED){
                         $fraud = true;
                         break;
@@ -75,6 +75,30 @@ trait ApiTrait
                 }
             }
         }
-        
+        return $fraud;
     }
+
+    public function validatePhone($phone){
+        $ch = curl_init();
+        $api = "https://api.veriphone.io/v2/verify?phone=$phone&key=BCFE2B1F1239489B9FAB1574D27F5D58";
+ 
+        curl_setopt($ch, CURLOPT_URL, $api);
+       
+        curl_setopt_array($ch, array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+        ));
+ 
+        $result = curl_exec($ch);
+        curl_close($ch);
+ 
+        $data = json_decode($result,true);
+
+        if($data["phone_valid"] == true){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }   

@@ -115,7 +115,7 @@ try {
     pl($e->getMessage());
 }
 
-    //---[Bank account 3]---/
+    //---[Bank account National---/
     // create a new NationalAccount with balance 500
 
     pl('--------- [Start testing bank national account (no conversion)] --------');
@@ -123,7 +123,7 @@ try {
     $nationalAccount = new NationalBankAccount(500 , null, "EUR");
     pl('My balance '. $nationalAccount->getBalance() .' € ('. $nationalAccount->getCurrency() .')');
 
-    //---[Bank account 3]---/
+    //---[Bank account International]---/
     // create a new International Account with balance 300
 
     pl('--------- [Start testing bank International account (Dollar conversion)] --------');
@@ -134,19 +134,73 @@ try {
     $currentBalance = $internationalAccount->getBalance();
     pl('Converting balance to Dollars '. $internationalAccount->convertBalance($currentBalance));
 
-    pl('--------- [Start testing National account] --------');
-    $person1 = new Person("john.doe@example.com", "54559040G", "Guillem");
+    //---[PERSON'S EMAIL]---/
+    // create a new Person  and test his/her email
 
-    pl('--------- [Start testing International account] --------');
-    $person1 = new Person("john.doe@invalid-email", "54559040G", "Guillem");
+    pl('--------- [Start testing EMAIL] --------');
+    $person1 = new Person("john.doe@example.com", "54559040G", "Guillem", null);
+
+    pl('--------- [Start testing EMAIL] --------');
+    $person1 = new Person("john.doe@invalid-email", "54559040G", "Guillem", null);
 
 
     // Test of different transactions
+     //---[Bank account 3]---/
+    // Account with balance 5000
+
+    pl('--------- [Start testing bank account (Fraud API)] --------');
     $bankAccount3 = new BankAccount(5001);
-    
+
+    pl(mixed: 'Doing transaction withdrawal (-5001) with current balance : ' . $bankAccount3->getBalance());
+    try{
+        $bankAccount3->transaction(bankTransaction:new WithdrawTransaction(5001) );
+
+    } catch(FailedTransactionException $e){
+        pl($e->getMessage());
+    }
+    pl('My balance '. $bankAccount3->getBalance() . ' € ('. $bankAccount3->getCurrency() .')');
+
+
+    pl(mixed: 'Doing transaction withdrawal (-5000) with current balance : ' . $bankAccount3->getBalance());
+    try{
+        $bankAccount3->transaction(bankTransaction:new WithdrawTransaction(5000) );
+
+    } catch(FailedTransactionException $e){
+        pl($e->getMessage());
+    }
+
+    pl('My balance '. $bankAccount3->getBalance() . ' € ('. $bankAccount3->getCurrency() .')');
+
+
+    pl(mixed: 'Doing transaction deposit (+20000) with current balance : ' . $bankAccount3->getBalance());
+    try{
+        $bankAccount3->transaction(bankTransaction:new DepositTransaction(20000) );
+
+    } catch(FailedTransactionException $e){
+        pl($e->getMessage());
+    }
+    pl('My balance '. $bankAccount3->getBalance() . ' € ('. $bankAccount3->getCurrency() .')');
+
+
+    pl(mixed: 'Doing transaction deposit (+20001) with current balance : ' . $bankAccount3->getBalance());
+    try{
+        $bankAccount3->transaction(bankTransaction:new DepositTransaction(20001) );
+
+    } catch(FailedTransactionException $e){
+        pl($e->getMessage());
+    }
+    pl('My balance '. $bankAccount3->getBalance() . ' € ('. $bankAccount3->getCurrency() .')');
 
 
 
+    //---[PERSON'S PHONE]---/
+    // create a new Person  and test his/her email
+
+    pl('--------- [Start testing PHONE] --------');
+    $person1 = new Person(null, "54559040G", "Guillem", "+34607600775");
+
+    pl('--------- [Start testing PHONE] --------');
+    $person1 = new Person(null, "54559040G", "Guillem", "1234abc13425");
 
 
 
