@@ -141,6 +141,9 @@ try {
     $person1 = new Person("john.doe@invalid-email", "54559040G", "Guillem");
 
 
+    // Test of different transactions
+    $bankAccount3 = new BankAccount(5001);
+    
 
 
 

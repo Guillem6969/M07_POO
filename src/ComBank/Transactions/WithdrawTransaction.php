@@ -11,9 +11,12 @@ use ComBank\Bank\Contracts\BackAccountInterface;
 use ComBank\Exceptions\FailedTransactionException;
 use ComBank\Exceptions\InvalidOverdraftFundsException;
 use ComBank\Transactions\Contracts\BankTransactionInterface;
+use ComBank\Support\Traits\ApiTrait;
 
 class WithdrawTransaction extends BaseTransaction implements BankTransactionInterface
 {
+
+    use ApiTrait;
 
     public function __construct($amount){
         parent::validateAmount($amount);
@@ -22,6 +25,10 @@ class WithdrawTransaction extends BaseTransaction implements BankTransactionInte
 
     public function applyTransaction(BackAccountInterface $bankAccount): float{
         
+        if($this->detectFraud(transaction: $this)){
+            throw new FailedTransactionException('Blocked by possible fraud');
+        }
+
         $balance = $bankAccount->getBalance();
         $amount = $this->getAmount();
         $next_balance = $balance - $amount;
