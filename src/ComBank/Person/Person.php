@@ -38,7 +38,7 @@ class Person {
                 pl("Validating phone: ".$phone);
                 pl("Phone is valid");
             } else{
-                pl("Validating email: ".$phone);
+                pl("Validating phone: ".$phone);
                 pl("Phone: invalid phone number: ". $phone);
             }
         }
