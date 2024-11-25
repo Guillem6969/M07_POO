@@ -38,8 +38,8 @@ class Person {
                 pl("Validating phone: ".$phone);
                 pl("Phone is valid");
             } else{
-                pl("Validating email: ".$email);
-                pl("Phone: invalid phone number: ". $email);
+                pl("Validating phone: ".$phone);
+                pl("Phone: invalid phone number: ". $phone);
             }
         }
     }
