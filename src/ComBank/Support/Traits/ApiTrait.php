@@ -4,7 +4,7 @@ use ComBank\Transactions\Contracts\BankTransactionInterface;
 
 trait ApiTrait
 {
-    public function validateEmail(string $email){
+    public function validateEmail(string $email): bool{
 
         $url = "https://api.usercheck.com/email/$email";
     
@@ -46,7 +46,7 @@ trait ApiTrait
     }
 
 
-    public function detectFraud(BankTransactionInterface $transaction){
+    public function detectFraud(BankTransactionInterface $transaction): bool{
         
         $url = "https://673cc1d796b8dcd5f3fb7aff.mockapi.io/Fraud_API/fraudApi";
 
@@ -78,7 +78,7 @@ trait ApiTrait
         return $fraud;
     }
 
-    public function validatePhone($phone){
+    public function validatePhone($phone): bool{
         $ch = curl_init();
         $api = "https://api.veriphone.io/v2/verify?phone=$phone&key=BCFE2B1F1239489B9FAB1574D27F5D58";
  
