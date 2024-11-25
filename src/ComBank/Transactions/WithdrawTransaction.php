@@ -50,8 +50,4 @@ class WithdrawTransaction extends BaseTransaction implements BankTransactionInte
     public function getTransactionInfo(): string{
         return "WITHDRAW_TRANSACTION";
     }
-
-    public function getAmount(){
-        return $this->amount;
-    }
 }

@@ -16,5 +16,9 @@ abstract class BaseTransaction
 
     use AmountValidationTrait;
     protected $amount;
+
+    public function getAmount(){
+        return $this->amount;
+    }
     
 }
